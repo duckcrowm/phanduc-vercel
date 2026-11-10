@@ -1,74 +1,71 @@
-'use client'
-
 import Image from 'next/image'
 import { ArrowDown, Sun } from 'lucide-react'
-import { useLanguage } from '@/components/language-provider'
+import { profile } from '@/lib/portfolio-data'
 import { TypedRole } from '@/components/typed-role'
-import { Typewriter } from '@/components/typewriter'
 
 export function HeroSection() {
-  const { lang, t } = useLanguage()
-  const h = t.hero
-
   return (
-    <section id="home" className="relative scroll-mt-24 overflow-hidden">
+    <section id="top" className="relative overflow-hidden">
       <div className="bg-grid pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_top,black_30%,transparent_75%)]" />
-      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-14 md:grid-cols-[1.3fr_1fr] md:pt-16">
-        <div className="flex flex-col gap-6 py-2">
-          <p className="font-mono text-lg font-semibold">
-            <span className="text-foreground">{`> ${h.greeting} `}</span>
-            <span className="text-primary">{h.name}</span>
-          </p>
+      <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 pb-20 pt-16 md:grid-cols-[1.3fr_1fr] md:pt-24">
+        <div className="flex flex-col gap-6">
+          <p className="font-mono text-sm text-primary">{`> ${profile.greeting}`}</p>
           <h1 className="text-balance font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-            {h.headline}
+            {profile.name}
           </h1>
           <p className="font-display text-2xl font-medium text-muted-foreground sm:text-3xl">
-            <TypedRole key={lang} roles={h.roles} />
+            <TypedRole roles={profile.roles} />
           </p>
-          <div className="flex max-w-xl flex-col gap-4 text-pretty text-base leading-relaxed text-muted-foreground">
-            <p className="text-primary">{h.hello}</p>
-            <p>
-              {h.introBefore}
-              <span className="text-primary">{h.highlight}</span>
-              {h.introAfter}
-            </p>
-            <p>{h.intro2}</p>
+          <div className="flex max-w-xl flex-col gap-4 text-pretty leading-relaxed text-muted-foreground">
+            {profile.intro.map((p) => (
+              <p key={p.slice(0, 20)}>{p}</p>
+            ))}
             <p className="flex items-center gap-2 font-medium text-foreground">
-              {h.motto}
-              <Sun className="size-4 shrink-0 text-primary" aria-hidden="true" />
+              {profile.motto}
+              <Sun className="size-4 text-primary" aria-hidden="true" />
             </p>
           </div>
           <div className="flex flex-wrap gap-3 pt-2">
             <a
               href="#contact"
-              className="rounded-full bg-primary px-5 py-3 font-mono text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              className="rounded-md bg-primary px-5 py-3 font-mono text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
             >
-              {h.ctaPrimary}
+              Kết nối ngay
             </a>
             <a
-              href="#projects"
-              className="flex items-center gap-2 rounded-full border border-border px-5 py-3 font-mono text-sm transition-colors hover:border-primary hover:text-primary"
+              href="#experience"
+              className="flex items-center gap-2 rounded-md border border-border px-5 py-3 font-mono text-sm transition-colors hover:border-primary hover:text-primary"
             >
-              {h.ctaSecondary}
+              Xem dự án
               <ArrowDown className="size-4" aria-hidden="true" />
             </a>
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-sm md:mx-0 md:max-w-none">
-          <div className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl shadow-primary/5">
-            <div className="border-b border-border px-4 py-3 font-mono text-xs text-muted-foreground">
-              <Typewriter key={lang} text={h.caption} />
+        <div className="mx-auto w-full max-w-sm">
+          <div className="overflow-hidden rounded-xl border border-border bg-card shadow-2xl shadow-primary/5">
+            <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+              <span className="size-3 rounded-full bg-[#ff5f56]" />
+              <span className="size-3 rounded-full bg-[#ffbd2e]" />
+              <span className="size-3 rounded-full bg-[#27c93f]" />
+              <span className="ml-2 font-mono text-xs text-muted-foreground">{`${profile.shortName}.png`}</span>
             </div>
-            <div className="relative min-h-[420px] flex-1">
+            <div className="relative aspect-square">
               <Image
-                src="/images/erdtree.jpg"
-                alt={h.imageAlt}
+                src="/images/avatar.png"
+                alt={`Ảnh chân dung ${profile.name}`}
                 fill
                 priority
-                sizes="(min-width: 768px) 480px, 90vw"
-                className="object-cover object-[66%_center]"
+                sizes="(min-width: 768px) 384px, 90vw"
+                className="object-cover"
               />
+            </div>
+            <div className="flex items-center justify-between px-4 py-3 font-mono text-xs">
+              <span className="text-muted-foreground">status:</span>
+              <span className="flex items-center gap-2 text-primary">
+                <span className="size-2 animate-pulse rounded-full bg-primary" />
+                open_to_work
+              </span>
             </div>
           </div>
         </div>
