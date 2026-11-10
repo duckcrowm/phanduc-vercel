@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useLanguage } from '@/components/language-provider'
 import { profile } from '@/lib/portfolio-data'
 
 function formatTime(date: Date) {
@@ -8,6 +9,7 @@ function formatTime(date: Date) {
 }
 
 export function SiteFooter() {
+  const { t } = useLanguage()
   const [time, setTime] = useState('--:--:--')
 
   useEffect(() => {
@@ -21,13 +23,15 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 py-6 font-mono text-xs text-muted-foreground sm:flex-row">
         <p>
           {'© '}
-          {new Date().getFullYear()} {profile.name}
+          {new Date().getFullYear()} {t.hero.name}
         </p>
         <p className="flex flex-wrap justify-center gap-x-4">
           <span>
-            SERVER TIME: <time className="text-primary">{time}</time>
+            {t.footer.serverTime}: <time className="text-primary">{time}</time>
           </span>
-          <span>COORDINATES: {profile.coordinates}</span>
+          <span>
+            {t.footer.coordinates}: {profile.coordinates}
+          </span>
         </p>
       </div>
     </footer>
